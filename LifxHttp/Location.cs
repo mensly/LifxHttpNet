@@ -8,32 +8,14 @@ using System.Threading.Tasks;
 namespace LifxHttp
 {
 
-    public sealed class Location : IEnumerable<Light>
+    public sealed class Location : LightCollection
     {
-        public string Id { get; private set; }
-        public string Label { get; private set; }
+        public Location(LifxClient client, string id, string label, List<Light> lights)
+            : base(client, id, label, lights) { }
 
-        private List<Light> lights;
-
-        public Location(string id, string label, List<Light> lights)
+        public static implicit operator Selector(Location location)
         {
-            Id = id;
-            Label = label;
-            this.lights = lights;
-        }
-
-        public IEnumerator<Light> GetEnumerator()
-        {
-            return lights.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return lights.GetEnumerator();
-        }
-        public override string ToString()
-        {
-            return Label;
+            return new Selector.LocationId(location.Id);
         }
     }
 }

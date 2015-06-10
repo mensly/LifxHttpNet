@@ -31,6 +31,7 @@ namespace LifxHttp
             }
         }
 
+        internal LifxClient Client { get; set; }
         /// <summary>
         /// Serial number of the light
         /// </summary>

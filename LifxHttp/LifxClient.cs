@@ -32,7 +32,13 @@ namespace LifxHttp
         public async Task<List<Light>> ListLights(Selector selector = null)
         {
             if (selector == null) { selector = Selector.All; }
-            return await lifxApi.ListLights(auth, selector.ToString());
+            List<Light> lights = await lifxApi.ListLights(auth, selector.ToString());
+            foreach (var l in lights)
+            {
+                // Attach this client to lights
+                l.Client = this;
+            }
+            return lights;
         }
         /// <summary>
         /// Gets light groups belonging to the authenticated account

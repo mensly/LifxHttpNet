@@ -20,7 +20,9 @@ namespace LifxHttp
                 }
                 groups[light.group].Add(light);
             }
-            return groups.Select(entry => new Group(entry.Key.id, entry.Key.name, entry.Value)).ToList();
+            // Grab client from a light
+            LifxClient client = (groups.Count > 0) ? groups.First().Value.First().Client : null;
+            return groups.Select(entry => new Group(client, entry.Key.id, entry.Key.name, entry.Value)).ToList();
         }
         public static List<Location> AsLocations(this IEnumerable<Light> lights)
         {
@@ -34,7 +36,9 @@ namespace LifxHttp
                 }
                 groups[light.location].Add(light);
             }
-            return groups.Select(entry => new Location(entry.Key.id, entry.Key.name, entry.Value)).ToList();
+            // Grab client from a light
+            LifxClient client = (groups.Count > 0) ? groups.First().Value.First().Client : null;
+            return groups.Select(entry => new Location(client, entry.Key.id, entry.Key.name, entry.Value)).ToList();
         }
     }
 }
