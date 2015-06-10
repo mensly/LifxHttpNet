@@ -19,7 +19,7 @@ namespace LifxHttpSample
 
         private static async Task RunDemos(LifxClient client)
         {
-            // await DemoListing(client);
+            await DemoListing(client);
             await DemoModify(client);
         }
         
