@@ -1,0 +1,99 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace LifxHttp
+{
+    /// <summary>
+    /// Main class used to abstract functionality of the Lifx HTTP API.
+    /// </summary>
+    public class LifxClient
+    {
+        private ILifxApi lifxApi;
+        private readonly string auth;
+
+        /// <summary>
+        /// Create a new LifxClient that can perform actions over the HTTP API.
+        /// </summary>
+        /// <param name="token">User token as generated from https://cloud.lifx.com/settings </param>
+        public LifxClient(string token)
+        {
+            auth = "Bearer " + token;
+            lifxApi = Refit.RestService.For<ILifxApi>("https://api.lifx.com/v1beta1");
+        }
+
+        /// <summary>
+        /// Gets lights belonging to the authenticated account
+        /// </summary>
+        /// <param name="selector">Filter for which lights are targetted</param>
+        /// <returns>All matching lights</returns>
+        public async Task<List<Light>> ListLights(Selector selector = null)
+        {
+            if (selector == null) { selector = Selector.All; }
+            return await lifxApi.ListLights(auth, selector.ToString());
+        }
+        /// <summary>
+        /// Gets light groups belonging to the authenticated account
+        /// </summary>
+        /// <param name="selector">Filter for which lights are targetted</param>
+        /// <returns>All groups containing matching lights</returns>
+        public async Task<List<Group>> ListGroups(Selector selector = null)
+        {
+            return (await ListLights(selector)).AsGroups();
+        }
+        /// <summary>
+        /// Gets locations belonging to the authenticated account
+        /// </summary>
+        /// <param name="selector">Filter for which lights are targetted</param>
+        /// <returns>All locations containing matching lights</returns>
+        public async Task<List<Location>> ListLocations(Selector selector = null)
+        {
+            return (await ListLights(selector)).AsLocations();
+        }
+        /// <summary>
+        /// Turn off lights if they are on, or turn them on if they are off. 
+        /// Physically powered off lights are ignored.
+        /// </summary>
+        /// <param name="selector">Filter for which lights are targetted</param>
+        /// <returns>Result indicating success of operation</returns>
+        public async Task<List<ApiResult>> TogglePower(Selector selector)
+        {
+            if (selector == null) { selector = Selector.All; }
+            return await lifxApi.TogglePower(auth, selector.ToString());
+        }
+        /// <summary>
+        /// Turn lights on, or turn lights off.
+        /// </summary>
+        /// <param name="powerState">True for on, false for off</param>
+        /// <param name="duration">Optionally set a duration which will fade on (or off) over the given duration in seconds.</param>
+        /// <param name="selector">Filter for which lights are targetted</param>
+        /// <returns>Result indicating success of operation</returns>
+        public async Task<List<ApiResult>> SetPower(Selector selector, bool powerState, float duration = 1f)
+        {
+            return await SetPower(selector, powerState ? PowerState.On : PowerState.Off, duration);
+        }
+        /// <summary>
+        /// Turn lights on, or turn lights off.
+        /// </summary>
+        /// <param name="powerState">Desired power state for lights</param>
+        /// <param name="duration">Optionally set a duration which will fade on (or off) over the given duration in seconds.</param>
+        /// <param name="selector">Filter for which lights are targetted</param>
+        /// <returns>Result indicating success of operation</returns>
+        public async Task<List<ApiResult>> SetPower(Selector selector, PowerState powerState, float duration = 1)
+        {
+            if (selector == null) { selector = Selector.All; }
+            string args = string.Format("state={0},duration={1}", powerState.ToString().ToLowerInvariant(), duration);
+            return await lifxApi.SetPower(auth, selector.ToString(), args);
+        }
+
+        public async Task<List<ApiResult>> SetColor(Selector selector, LifxColor color, float duration = 1f, bool powerOn = true)
+        {
+            if (selector == null) { selector = Selector.All; }
+            string args = string.Format("color={0},duration={1},power_on={2}", color, duration, powerOn);
+            return await lifxApi.SetColor(auth, selector.ToString(), args);
+        }
+        
+    }
+}
