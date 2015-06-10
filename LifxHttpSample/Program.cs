@@ -9,8 +9,7 @@ namespace LifxHttpSample
 {
     class Program
     {
-        // private const string TOKEN = "REDACTED - Generate from https://cloud.lifx.com/settings";
-        private const string TOKEN = "cd22b229a3d424fe242644b342fb48099e9be0e8b9f052d6fa26676732e23a97";
+        private const string TOKEN = "REDACTED - Generate from https://cloud.lifx.com/settings";
 
         static void Main(string[] args)
         {
