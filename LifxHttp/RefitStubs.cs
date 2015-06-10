@@ -56,16 +56,34 @@ namespace LifxHttp
             return (Task<List<ApiResult>>) methodImpls["TogglePower"](Client, arguments);
         }
 
+        public virtual Task<ApiResult> TogglePowerSingle(string auth,string selector)
+        {
+            var arguments = new object[] { auth,selector };
+            return (Task<ApiResult>) methodImpls["TogglePowerSingle"](Client, arguments);
+        }
+
         public virtual Task<List<ApiResult>> SetPower(string auth,string selector,string args)
         {
             var arguments = new object[] { auth,selector,args };
             return (Task<List<ApiResult>>) methodImpls["SetPower"](Client, arguments);
         }
 
+        public virtual Task<ApiResult> SetPowerSingle(string auth,string selector,string args)
+        {
+            var arguments = new object[] { auth,selector,args };
+            return (Task<ApiResult>) methodImpls["SetPowerSingle"](Client, arguments);
+        }
+
         public virtual Task<List<ApiResult>> SetColor(string auth,string selector,string args)
         {
             var arguments = new object[] { auth,selector,args };
             return (Task<List<ApiResult>>) methodImpls["SetColor"](Client, arguments);
+        }
+
+        public virtual Task<ApiResult> SetColorSingle(string auth,string selector,string args)
+        {
+            var arguments = new object[] { auth,selector,args };
+            return (Task<ApiResult>) methodImpls["SetColorSingle"](Client, arguments);
         }
 
     }

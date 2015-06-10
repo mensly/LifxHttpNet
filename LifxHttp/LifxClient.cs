@@ -61,7 +61,17 @@ namespace LifxHttp
         public async Task<List<ApiResult>> TogglePower(Selector selector)
         {
             if (selector == null) { selector = Selector.All; }
-            return await lifxApi.TogglePower(auth, selector.ToString());
+            if (selector.IsSingle)
+            {
+                return new List<ApiResult>()
+                {
+                    await lifxApi.TogglePowerSingle(auth, selector.ToString())
+                };
+            }
+            else
+            {
+                return await lifxApi.TogglePower(auth, selector.ToString());
+            }
         }
         /// <summary>
         /// Turn lights on, or turn lights off.
@@ -84,15 +94,35 @@ namespace LifxHttp
         public async Task<List<ApiResult>> SetPower(Selector selector, PowerState powerState, float duration = 1)
         {
             if (selector == null) { selector = Selector.All; }
-            string args = string.Format("state={0},duration={1}", powerState.ToString().ToLowerInvariant(), duration);
-            return await lifxApi.SetPower(auth, selector.ToString(), args);
+            string args = string.Format("state={0}&duration={1}", powerState.ToString().ToLowerInvariant(), duration);
+            if (selector.IsSingle)
+            {
+                return new List<ApiResult>()
+                {
+                    await lifxApi.SetPowerSingle(auth, selector.ToString(), args)
+                };
+            }
+            else 
+            {
+                return await lifxApi.SetPower(auth, selector.ToString(), args);
+            }
         }
 
         public async Task<List<ApiResult>> SetColor(Selector selector, LifxColor color, float duration = 1f, bool powerOn = true)
         {
             if (selector == null) { selector = Selector.All; }
-            string args = string.Format("color={0},duration={1},power_on={2}", color, duration, powerOn);
-            return await lifxApi.SetColor(auth, selector.ToString(), args);
+            string args = string.Format("color={0}&duration={1}&power_on={2}", color, duration, powerOn);
+            if (selector.IsSingle)
+            {
+                return new List<ApiResult>()
+                {
+                    await lifxApi.SetColorSingle(auth, selector.ToString(), args)
+                };
+            }
+            else
+            {
+                return await lifxApi.SetColor(auth, selector.ToString(), args);
+            }
         }
         
     }

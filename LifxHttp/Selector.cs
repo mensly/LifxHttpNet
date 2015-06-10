@@ -26,9 +26,10 @@ namespace LifxHttp
         /// <summary>
         /// One randomly selected light belonging to the authenticated account.
         /// </summary>
-        public static readonly Selector Random = new Selector(TYPE_RANDOM);
+        public static readonly Selector Random = new Selector(TYPE_RANDOM) { IsSingle = true };
 
         private readonly string selector;
+        internal bool IsSingle { get; private set; }
 
         private Selector(string selector) { this.selector = selector; }
 
@@ -44,7 +45,7 @@ namespace LifxHttp
         /// </summary>
         public class LightId : Selector
         {
-            public LightId(string id) : base(TYPE_LIGHT_ID, id) { }
+            public LightId(string id) : base(TYPE_LIGHT_ID, id) { IsSingle = true; }
         }
 
         /// <summary>
@@ -52,7 +53,7 @@ namespace LifxHttp
         /// </summary>
         public class LightLabel : Selector
         {
-            public LightLabel(string label) : base(label) { }
+            public LightLabel(string label) : base(label) { IsSingle = true; }
         }
 
         /// <summary>

@@ -20,8 +20,8 @@ namespace LifxHttpSample
 
         private static async Task RunDemos(LifxClient client)
         {
-            await DemoListing(client);
-            //await DemoModify(client);
+            // await DemoListing(client);
+            await DemoModify(client);
         }
         
         private static async Task DemoListing(LifxClient client)
@@ -70,24 +70,21 @@ namespace LifxHttpSample
                 }
             }
             Console.WriteLine("Using light: {0}", light);
-            const int delay = 500;
+            const int delay = 1000;
             Console.WriteLine("Turning light off");
             await client.SetPower(light, false);
             await Task.Delay(delay);
-            Console.WriteLine("Toggling light off");
+            Console.WriteLine("Toggling light on");
             await client.TogglePower(light);
             await Task.Delay(delay);
-            Console.WriteLine("Turning light solt red");
-            await client.SetColor(light, new LifxColor.HSB(0, 0.3f));
+            Console.WriteLine("Turning light soft red");
+            await client.SetColor(light, new LifxColor.HSB(0, 0.2f, 0.5f));
             await Task.Delay(delay);
-            Console.WriteLine("Turning light bright red");
-            await client.SetColor(light, new LifxColor.RGB(0xff0000));
-            await Task.Delay(delay);
-            Console.WriteLine("Turning light dim cool white");
-            await client.SetColor(light, new LifxColor.White(0.2f, LifxColor.TemperatureMin));
-            await Task.Delay(delay);
-            Console.WriteLine("Turning light normal white");
+            Console.WriteLine("Turning light white");
             await client.SetColor(light, LifxColor.DefaultWhite);
+            await Task.Delay(delay);
+            Console.WriteLine("Turning light hot white");
+            await client.SetColor(light, new LifxColor.White(0.8f, LifxColor.TemperatureMax));
             await Task.Delay(delay);
         }
     }
