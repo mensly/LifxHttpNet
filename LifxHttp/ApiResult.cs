@@ -13,6 +13,11 @@ namespace LifxHttp
     [JsonObject(MemberSerialization.OptIn)]
     public sealed class ApiResult
     {
+        internal static bool Successful(ApiResult result)
+        {
+            return result.IsSuccessful;
+        }
+
         [JsonProperty("id")]
         public string Id { get; private set; }
 

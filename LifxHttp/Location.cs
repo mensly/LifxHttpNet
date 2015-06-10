@@ -13,9 +13,9 @@ namespace LifxHttp
         public Location(LifxClient client, string id, string label, List<Light> lights)
             : base(client, id, label, lights) { }
 
-        public static implicit operator Selector(Location location)
+        public override Selector ToSelector()
         {
-            return new Selector.LocationId(location.Id);
+            return new Selector.LocationId(Id);
         }
     }
 }

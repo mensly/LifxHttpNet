@@ -100,6 +100,21 @@ namespace LifxHttp
             return capabilties.ContainsKey(capabilitity) && capabilties[capabilitity];
         }
 
+        public async Task<ApiResult> TogglePower()
+        {
+            return (await Client.TogglePower(this)).First();
+        }
+
+        public async Task<ApiResult> SetPower(bool powerState, float duration = LifxClient.DEFAULT_DURATION)
+        {
+            return (await Client.SetPower(this, powerState, duration)).First();
+        }
+
+        public async Task<ApiResult> SetColor(LifxColor color, float duration = LifxClient.DEFAULT_DURATION, bool powerOn = LifxClient.DEFAULT_POWER_ON)
+        {
+            return (await Client.SetColor(this, color, duration, powerOn)).First();
+        }
+
         public override string ToString()
         {
             return Label;

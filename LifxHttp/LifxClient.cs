@@ -11,6 +11,8 @@ namespace LifxHttp
     /// </summary>
     public class LifxClient
     {
+        internal const float DEFAULT_DURATION = 1f;
+        internal const bool DEFAULT_POWER_ON = true;
         private ILifxApi lifxApi;
         private readonly string auth;
 
@@ -86,7 +88,7 @@ namespace LifxHttp
         /// <param name="duration">Optionally set a duration which will fade on (or off) over the given duration in seconds.</param>
         /// <param name="selector">Filter for which lights are targetted</param>
         /// <returns>Result indicating success of operation</returns>
-        public async Task<List<ApiResult>> SetPower(Selector selector, bool powerState, float duration = 1f)
+        public async Task<List<ApiResult>> SetPower(Selector selector, bool powerState, float duration = DEFAULT_DURATION)
         {
             return await SetPower(selector, powerState ? PowerState.On : PowerState.Off, duration);
         }
@@ -97,7 +99,7 @@ namespace LifxHttp
         /// <param name="duration">Optionally set a duration which will fade on (or off) over the given duration in seconds.</param>
         /// <param name="selector">Filter for which lights are targetted</param>
         /// <returns>Result indicating success of operation</returns>
-        public async Task<List<ApiResult>> SetPower(Selector selector, PowerState powerState, float duration = 1)
+        public async Task<List<ApiResult>> SetPower(Selector selector, PowerState powerState, float duration = DEFAULT_DURATION)
         {
             if (selector == null) { selector = Selector.All; }
             string args = string.Format("state={0}&duration={1}", powerState.ToString().ToLowerInvariant(), duration);
@@ -114,7 +116,7 @@ namespace LifxHttp
             }
         }
 
-        public async Task<List<ApiResult>> SetColor(Selector selector, LifxColor color, float duration = 1f, bool powerOn = true)
+        public async Task<List<ApiResult>> SetColor(Selector selector, LifxColor color, float duration = DEFAULT_DURATION, bool powerOn = DEFAULT_POWER_ON)
         {
             if (selector == null) { selector = Selector.All; }
             string args = string.Format("color={0}&duration={1}&power_on={2}", color, duration, powerOn);

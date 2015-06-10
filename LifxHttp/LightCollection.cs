@@ -32,10 +32,34 @@ namespace LifxHttp
         {
             return lights.GetEnumerator();
         }
+        public async Task<List<ApiResult>> TogglePower()
+        {
+            if (client == null) { return new List<ApiResult>(); }
+            return await client.TogglePower(this);
+        }
+
+        public async Task<List<ApiResult>> SetPower(bool powerState, float duration = LifxClient.DEFAULT_DURATION)
+        {
+            if (client == null) { return new List<ApiResult>(); }
+            return await client.SetPower(this, powerState, duration);
+        }
+
+        public async Task<List<ApiResult>> SetColor(LifxColor color, float duration = LifxClient.DEFAULT_DURATION, bool powerOn = LifxClient.DEFAULT_POWER_ON)
+        {
+            if (client == null) { return new List<ApiResult>(); }
+            return await client.SetColor(this, color, duration, powerOn);
+        }
+
+        public abstract Selector ToSelector();
+
         public override string ToString()
         {
             return Label;
         }
 
+        public static implicit operator Selector(LightCollection lightCollection)
+        {
+            return lightCollection.ToSelector();
+        }
     }
 }

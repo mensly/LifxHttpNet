@@ -13,9 +13,9 @@ namespace LifxHttp
         public Group(LifxClient client, string id, string label, List<Light> lights)
             : base(client, id, label, lights) { }
 
-        public static implicit operator Selector(Group group)
+        public override Selector ToSelector()
         {
-            return new Selector.GroupId(group.Id);
+            return new Selector.GroupId(Id);
         }
     }
 }
