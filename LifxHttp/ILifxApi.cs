@@ -10,6 +10,9 @@ namespace LifxHttp
     internal interface ILifxApi
     {
         [Get("/lights/{selector}")]
+        Task<Light> GetLight([Header("Authorization")] string auth, string selector);
+
+        [Get("/lights/{selector}")]
         Task<List<Light>> ListLights([Header("Authorization")] string auth, string selector);
 
         [Post("/lights/{selector}/toggle")]

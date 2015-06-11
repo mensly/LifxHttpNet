@@ -34,7 +34,20 @@ namespace LifxHttp
         public async Task<List<Light>> ListLights(Selector selector = null)
         {
             if (selector == null) { selector = Selector.All; }
-            List<Light> lights = await lifxApi.ListLights(auth, selector.ToString());
+            List<Light> lights;
+            if (selector.IsSingle)
+            {
+                Light light = await lifxApi.GetLight(auth, selector.ToString());
+                lights = new List<Light>();
+                if (light != null)
+                {
+                    lights.Add(light);
+                }
+            }
+            else
+            {
+                lights = await lifxApi.ListLights(auth, selector.ToString());
+            }
             foreach (var l in lights)
             {
                 // Attach this client to lights

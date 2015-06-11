@@ -44,6 +44,12 @@ namespace LifxHttp
             Client = client;
         }
 
+        public virtual Task<Light> GetLight(string auth,string selector)
+        {
+            var arguments = new object[] { auth,selector };
+            return (Task<Light>) methodImpls["GetLight"](Client, arguments);
+        }
+
         public virtual Task<List<Light>> ListLights(string auth,string selector)
         {
             var arguments = new object[] { auth,selector };

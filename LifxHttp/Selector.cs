@@ -26,7 +26,7 @@ namespace LifxHttp
         /// <summary>
         /// One randomly selected light belonging to the authenticated account.
         /// </summary>
-        public static readonly Selector Random = new Selector(TYPE_RANDOM) { IsSingle = true };
+        private static readonly Selector Random = new Selector(TYPE_RANDOM) { IsSingle = true };
 
         private readonly string selector;
         internal bool IsSingle { get; private set; }
