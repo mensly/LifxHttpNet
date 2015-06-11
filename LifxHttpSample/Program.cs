@@ -87,6 +87,9 @@ namespace LifxHttpSample
             Console.WriteLine("Turning light soft red");
             await light.SetColor(new LifxColor.HSB(0, 0.2f, 0.5f));
             await Task.Delay(DELAY);
+            Console.WriteLine("Turning light blue-green");
+            await light.SetColor(new LifxColor.RGB(0x00c89c));
+            await Task.Delay(DELAY);
             Console.WriteLine("Turning light white");
             await light.SetColor(LifxColor.DefaultWhite);
             await Task.Delay(DELAY);

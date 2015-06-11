@@ -37,6 +37,17 @@ namespace LifxHttp
         public static readonly LifxColor Purple = new Named("purple");
         public static readonly LifxColor Pink = new Named("pink");
 
+        public override bool Equals(object obj)
+        {
+            LifxColor color = obj as LifxColor;
+            return color != null && color.ToString() == ToString();
+        }
+
+        public override int GetHashCode()
+        {
+            return ToString().GetHashCode();
+        }
+
         /// <summary>
         /// A color defined by a particular English name
         /// </summary>
@@ -134,9 +145,9 @@ namespace LifxHttp
 
             public RGB(int r, int g, int b)
             {
-                R = (byte)Math.Min(Math.Max(0, r), byte.MaxValue);
-                G = (byte)Math.Min(Math.Max(0, g), byte.MaxValue);
-                B = (byte)Math.Min(Math.Max(0, b), byte.MaxValue);
+                R = (byte)Math.Min(Math.Max(r, 0), byte.MaxValue);
+                G = (byte)Math.Min(Math.Max(g, 0), byte.MaxValue);
+                B = (byte)Math.Min(Math.Max(b, 0), byte.MaxValue);
             }
 
             /// <summary>
@@ -145,14 +156,14 @@ namespace LifxHttp
             /// <param name="packedRGB">RGB packed integer eg 0xff0000 is bright deep red</param>
             public RGB(int packedRGB)
             {
-                R = (byte)(packedRGB >> 16);
-                G = (byte)(packedRGB >> 8);
-                B = (byte)packedRGB;
+                R = (byte)((packedRGB >> 16) & 0xff);
+                G = (byte)((packedRGB >> 8) & 0xff);
+                B = (byte)(packedRGB & 0xff);
             }
 
             public override string ToString()
             {
-                return string.Format("#{0:x}{0:x}{0:x}", R, G, B);
+                return string.Format("#{0:x2}{1:x2}{2:x2}", R, G, B);
             }
         }
     }
