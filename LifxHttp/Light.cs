@@ -115,6 +115,26 @@ namespace LifxHttp
             return (await Client.SetColor(this, color, duration, powerOn)).First();
         }
 
+        /// <summary>
+        /// Re-requests light information and updates all properties
+        /// </summary>
+        public async Task Refresh()
+        {
+            Light light = (await Client.ListLights(this)).First();
+            Id = light.Id;
+            UUID = light.UUID;
+            Label = light.Label;
+            IsConnected = light.IsConnected;
+            PowerState = light.PowerState;
+            Color = light.Color;
+            Brightness = light.Brightness;
+            group = light.group;
+            location = light.location;
+            LastSeen = light.LastSeen;
+            SecondsSinceSeen = light.SecondsSinceSeen;
+            ProductName = light.ProductName;
+        }
+
         public override string ToString()
         {
             return Label;

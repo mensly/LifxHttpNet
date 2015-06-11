@@ -26,16 +26,46 @@ namespace LifxHttp
         /// A normal white color temperature, this corresponds to the DefaultWhite color.
         /// </summary>
         public const int TemperatureDefault = 3500;
-
+        /// <summary>
+        /// Sets saturation to 0
+        /// </summary>
         public static readonly LifxColor DefaultWhite = new Named("white");
+        /// <summary>
+        /// Sets hue to 0
+        /// </summary>
         public static readonly LifxColor Red = new Named("red");
+        /// <summary>
+        /// Sets hue to 34
+        /// </summary>
         public static readonly LifxColor Orange = new Named("orange");
+        /// <summary>
+        /// Sets hue to 60
+        /// </summary>
         public static readonly LifxColor Yellow = new Named("yellow");
+        /// <summary>
+        /// Sets hue to 180
+        /// </summary>
         public static readonly LifxColor Cyan = new Named("cyan");
+        /// <summary>
+        /// Sets hue to 120
+        /// </summary>
         public static readonly LifxColor Green = new Named("green");
+        /// <summary>
+        /// Sets hue to 250
+        /// </summary>
         public static readonly LifxColor Blue = new Named("blue");
+        /// <summary>
+        /// Sets hue to 280
+        /// </summary>
         public static readonly LifxColor Purple = new Named("purple");
+        /// <summary>
+        /// Sets hue to 325
+        /// </summary>
         public static readonly LifxColor Pink = new Named("pink");
+        public static readonly IEnumerable<LifxColor> NamedColors = new List<LifxColor>()
+        {
+            DefaultWhite, Red, Orange, Yellow, Cyan, Green, Blue, Purple, Pink
+        };
 
         public override bool Equals(object obj)
         {

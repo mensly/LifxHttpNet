@@ -96,6 +96,16 @@ namespace LifxHttpSample
             Console.WriteLine("Turning light hot white");
             await light.SetColor(new LifxColor.White(0.8f, LifxColor.TemperatureMax));
             await Task.Delay(DELAY);
+
+            Console.WriteLine("Named colors:");
+            foreach (var c in LifxColor.NamedColors)
+            {
+                Console.Write("{0}: ", c);
+                await light.SetColor(c);
+                await light.Refresh();
+                Console.WriteLine("{0}", light.Color);
+                await Task.Delay(DELAY);
+            }
         }
 
         private static async Task DemoModifyCollections(LifxClient client)

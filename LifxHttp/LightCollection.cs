@@ -50,6 +50,14 @@ namespace LifxHttp
             return await client.SetColor(this, color, duration, powerOn);
         }
 
+        public async Task Refresh()
+        {
+            if (client != null)
+            {
+                lights = await client.ListLights(this);
+            }
+        }
+
         public abstract Selector ToSelector();
 
         public override string ToString()
