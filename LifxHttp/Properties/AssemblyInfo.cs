@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("LifxHttpNet")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("LifxHttp")]
+[assembly: AssemblyDescription(".Net wrapper around the Lifx cloud HTTP API")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("LifxHttpNet")]
+[assembly: AssemblyCompany("Mensly")]
+[assembly: AssemblyProduct("LifxHttp")]
 [assembly: AssemblyCopyright("Copyright ©  2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
