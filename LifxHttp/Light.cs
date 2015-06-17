@@ -12,7 +12,7 @@ namespace LifxHttp
     /// Model object for a Light
     /// </summary>
     [JsonObject(MemberSerialization.OptIn)]
-    public sealed class Light
+    public sealed class Light : ILightTarget<ApiResult>
     {
         [JsonObject(MemberSerialization.Fields)]
         internal class CollectionSpec
@@ -47,6 +47,7 @@ namespace LifxHttp
         [JsonProperty("connected")]
         public bool IsConnected { get; private set; }
 
+        public bool IsOn { get { return PowerState == PowerState.On; } }
         [JsonProperty("power")]
         public PowerState PowerState { get; private set; }
 

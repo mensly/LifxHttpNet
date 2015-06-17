@@ -7,10 +7,12 @@ using System.Threading.Tasks;
 
 namespace LifxHttp
 {
-    public abstract class LightCollection : IEnumerable<Light>
+    public abstract class LightCollection : IEnumerable<Light>, ILightTarget<List<ApiResult>>
     {
         public string Id { get; private set; }
         public string Label { get; private set; }
+
+        public bool IsOn { get { return lights.Any(l => l.IsOn); } }
 
         private List<Light> lights;
         private LifxClient client;

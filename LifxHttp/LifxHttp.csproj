@@ -39,6 +39,7 @@
     <Compile Include="ApiResult.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="ILifxApi.cs" />
+    <Compile Include="ILightTarget.cs" />
     <Compile Include="LightCollection.cs" />
     <Compile Include="Location.cs" />
     <Compile Include="Group.cs" />
