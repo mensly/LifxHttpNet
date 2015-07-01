@@ -14,6 +14,9 @@ namespace LifxHttp
     [JsonObject(MemberSerialization.OptIn)]
     public sealed class Light : ILightTarget<ApiResult>
     {
+        public const string ColorCapability = "has_color";
+        public const string ColorTemperatureCapability = "has_variable_color_temp";
+
         [JsonObject(MemberSerialization.Fields)]
         internal class CollectionSpec
         {
