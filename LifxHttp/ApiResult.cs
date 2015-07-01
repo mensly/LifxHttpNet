@@ -30,5 +30,10 @@ namespace LifxHttp
         public bool IsSuccessful { get { return Status == "ok"; } }
         
         public bool IsTimedOut { get { return Status == "timed_out"; } }
+
+        public ApiResult()
+        {
+            Status = "unknown";
+        }
     }
 }

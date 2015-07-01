@@ -97,8 +97,6 @@ namespace LifxHttp
             }
         }
 
-        internal Light() { }
-
         public bool HasCapability(string capabilitity)
         {
             return capabilties.ContainsKey(capabilitity) && capabilties[capabilitity];

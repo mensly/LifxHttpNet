@@ -14,7 +14,7 @@ namespace LifxHttp
         internal const float DEFAULT_DURATION = 1f;
         internal const bool DEFAULT_POWER_ON = true;
         private ILifxApi lifxApi;
-        private readonly string auth;
+        protected readonly string auth;
 
         /// <summary>
         /// Create a new LifxClient that can perform actions over the HTTP API.
@@ -24,6 +24,7 @@ namespace LifxHttp
         {
             auth = "Bearer " + token;
             lifxApi = Refit.RestService.For<ILifxApi>("https://api.lifx.com/v1beta1");
+            
         }
 
         /// <summary>
@@ -84,14 +85,27 @@ namespace LifxHttp
             if (selector == null) { selector = Selector.All; }
             if (selector.IsSingle)
             {
-                return new List<ApiResult>()
+                ApiResult result;
+                try
                 {
-                    await lifxApi.TogglePowerSingle(auth, selector.ToString())
-                };
+                    result = await lifxApi.TogglePowerSingle(auth, selector.ToString());
+                }
+                catch (Refit.ApiException e)
+                {
+                    result = e.GetContentAs<ApiResult>();
+                }
+                return new List<ApiResult>() { result };
             }
             else
             {
-                return await lifxApi.TogglePower(auth, selector.ToString());
+                try
+                {
+                    return await lifxApi.TogglePower(auth, selector.ToString());
+                }
+                catch (Refit.ApiException e)
+                {
+                    return e.GetContentAs<List<ApiResult>>();
+                }
             }
         }
         /// <summary>
@@ -118,14 +132,27 @@ namespace LifxHttp
             string args = string.Format("state={0}&duration={1}", powerState.ToString().ToLowerInvariant(), duration);
             if (selector.IsSingle)
             {
-                return new List<ApiResult>()
+                ApiResult result;
+                try
                 {
-                    await lifxApi.SetPowerSingle(auth, selector.ToString(), args)
-                };
+                    result = await lifxApi.SetPowerSingle(auth, selector.ToString(), args);
+                }
+                catch (Refit.ApiException e)
+                {
+                    result = e.GetContentAs<ApiResult>();
+                }
+                return new List<ApiResult>() { result };
             }
             else 
             {
-                return await lifxApi.SetPower(auth, selector.ToString(), args);
+                try
+                {
+                    return await lifxApi.SetPower(auth, selector.ToString(), args);
+                }
+                catch (Refit.ApiException e)
+                {
+                    return e.GetContentAs<List<ApiResult>>();
+                }
             }
         }
 
@@ -135,14 +162,27 @@ namespace LifxHttp
             string args = string.Format("color={0}&duration={1}&power_on={2}", color, duration, powerOn);
             if (selector.IsSingle)
             {
-                return new List<ApiResult>()
+                ApiResult result;
+                try
                 {
-                    await lifxApi.SetColorSingle(auth, selector.ToString(), args)
-                };
+                    result = await lifxApi.SetColorSingle(auth, selector.ToString(), args);
+                }
+                catch (Refit.ApiException e)
+                {
+                    result = e.GetContentAs<ApiResult>();
+                }
+                return new List<ApiResult>() { result };
             }
             else
             {
-                return await lifxApi.SetColor(auth, selector.ToString(), args);
+                try
+                {
+                    return await lifxApi.SetColor(auth, selector.ToString(), args);
+                }
+                catch (Refit.ApiException e)
+                {
+                    return e.GetContentAs<List<ApiResult>>();
+                }
             }
         }
         
