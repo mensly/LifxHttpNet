@@ -55,10 +55,25 @@ namespace LifxHttp
         public PowerState PowerState { get; private set; }
 
         [JsonProperty("color")]
-        public LifxColor.HSBK Color { get; private set; }
+        public LifxColor.HSBK Color
+        {
+            get { return color; }
+            set
+            {
+                if (color == null)
+                {
+                    color = value;
+                }
+                else
+                {
+                    // Retain brightness
+                    color = value.WithBrightness(color.Brightness);
+                }
+            }
+        }
 
         [JsonProperty("brightness")]
-        public float Brightness { get; private set; }
+        public float Brightness { get { return Color.Brightness; } set { Color = Color.WithBrightness(value); } }
 
         [JsonProperty("group")]
         internal CollectionSpec group = new CollectionSpec();
@@ -82,6 +97,7 @@ namespace LifxHttp
 
         [JsonProperty]
         private Dictionary<string, bool> capabilties = new Dictionary<string, bool>();
+        private LifxColor.HSBK color;
 
         public IEnumerable<string> Capabilities
         {

@@ -146,6 +146,11 @@ namespace LifxHttp
                 sb.Remove(sb.Length - 1, 1);
                 return sb.ToString();
             }
+
+            internal HSBK WithBrightness(float brightness)
+            {
+                return new HSBK(this.hue, this.saturation, brightness, this.kelvin);
+            }
         }
 
         /// <summary>
