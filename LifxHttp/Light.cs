@@ -134,11 +134,20 @@ namespace LifxHttp
         }
 
         /// <summary>
+        /// Re-requests light information
+        /// </summary>
+        /// <returns>A new instance of this light returned from API</returns>
+        public async Task<Light> GetRefreshed()
+        {
+            return (await Client.ListLights(this)).First();
+        }
+
+        /// <summary>
         /// Re-requests light information and updates all properties
         /// </summary>
         public async Task Refresh()
         {
-            Light light = (await Client.ListLights(this)).First();
+            Light light = await GetRefreshed();
             Id = light.Id;
             UUID = light.UUID;
             Label = light.Label;
