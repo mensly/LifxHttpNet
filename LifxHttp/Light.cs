@@ -95,19 +95,22 @@ namespace LifxHttp
         [JsonProperty("product_name")]
         public string ProductName { get; private set; }
 
-        [JsonProperty]
-        private Dictionary<string, bool> capabilties = new Dictionary<string, bool>();
+        [JsonProperty("capabilities")]
+        private Dictionary<string, bool> capabilities;
         private LifxColor.HSBK color;
 
         public IEnumerable<string> Capabilities
         {
             get
             {
-                foreach (var entry in capabilties)
+                if (capabilities != null)
                 {
-                    if (entry.Value)
+                    foreach (var entry in capabilities)
                     {
-                        yield return entry.Key;
+                        if (entry.Value)
+                        {
+                            yield return entry.Key;
+                        }
                     }
                 }
             }
@@ -115,7 +118,7 @@ namespace LifxHttp
 
         public bool HasCapability(string capabilitity)
         {
-            return capabilties.ContainsKey(capabilitity) && capabilties[capabilitity];
+            return capabilities != null && capabilities.ContainsKey(capabilitity) && capabilities[capabilitity];
         }
 
         public async Task<ApiResult> TogglePower()
