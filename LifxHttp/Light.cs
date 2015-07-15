@@ -57,23 +57,12 @@ namespace LifxHttp
         [JsonProperty("color")]
         public LifxColor.HSBK Color
         {
-            get { return color; }
-            set
-            {
-                if (color == null)
-                {
-                    color = value;
-                }
-                else
-                {
-                    // Retain brightness
-                    color = value.WithBrightness(color.Brightness);
-                }
-            }
+            get { return color == null ? null : color.WithBrightness(Brightness); }
+            set { color = value; }
         }
 
         [JsonProperty("brightness")]
-        public float Brightness { get { return Color.Brightness; } set { Color = Color.WithBrightness(value); } }
+        public float Brightness { get; private set; }
 
         [JsonProperty("group")]
         internal CollectionSpec group = new CollectionSpec();
