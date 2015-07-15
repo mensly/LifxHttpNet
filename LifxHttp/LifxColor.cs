@@ -139,7 +139,7 @@ namespace LifxHttp
                 {
                     sb.AppendFormat("brightness:{0} ", Math.Min(Math.Max(0, brightness.Value), 1));
                 }
-                if (kelvin != null)
+                if (kelvin != null && (saturation ?? 0) < 0.001)
                 {
                     sb.AppendFormat("kelvin:{0} ", Math.Min(Math.Max(TemperatureMin, kelvin.Value), TemperatureMax));
                 }
