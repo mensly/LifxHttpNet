@@ -15,6 +15,9 @@ namespace LifxHttp
         [Get("/scenes")]
         Task<List<Scene>> ListScenes([Header("Authorization")] string auth);
 
+        [Get("/color?string={colorName}")]
+        Task<LifxColor.HSBK> ValidateColor([Header("Authorization")] string auth, string colorName);
+
         [Put("/lights/{selector}/state")]
         [Headers("Content-Type: application/x-www-form-urlencoded")]
         Task<ApiResults> SetState([Header("Authorization")] string auth, string selector, [Body] string args);

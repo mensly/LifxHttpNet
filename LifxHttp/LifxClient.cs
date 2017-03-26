@@ -314,5 +314,18 @@ namespace LifxHttp
                 return e.GetContentAs<ApiResults>();
             }
         }
+
+        public async Task<Tuple<bool, LifxColor.HSBK>> ValidateColor(string colorName)
+        {
+            try
+            {
+                var color = await lifxApi.ValidateColor(auth, colorName);
+                return new Tuple<bool, LifxColor.HSBK>(true, color);
+            }
+            catch (Refit.ApiException e)
+            {
+                return new Tuple<bool, LifxColor.HSBK>(false, new LifxColor.HSBK());
+            }
+        } 
     }
 }

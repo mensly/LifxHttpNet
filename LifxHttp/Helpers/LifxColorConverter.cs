@@ -8,11 +8,23 @@ using System.Threading.Tasks;
 
 namespace LifxHttp.Helpers
 {
+    public static class JsonExtensions
+    {
+        public static bool IsNullOrEmpty(this JToken token)
+        {
+            return (token == null) ||
+                   (token.Type == JTokenType.Array && !token.HasValues) ||
+                   (token.Type == JTokenType.Object && !token.HasValues) ||
+                   (token.Type == JTokenType.String && token.ToString() == String.Empty) ||
+                   (token.Type == JTokenType.Null);
+        }
+    }
+
     public class LifxColorConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
-            //Assume we can convert to anything for now
+            //Assume we can convert to anything for now.
             return true;
         }
 
@@ -26,13 +38,13 @@ namespace LifxHttp.Helpers
                 double? brightness = null;
                 int? kelvin = null;
 
-                if (token["hue"] != null)
+                if (!token["hue"].IsNullOrEmpty())
                     hue = (double)token["hue"];
-                if (token["saturation"] != null)
+                if (!token["saturation"].IsNullOrEmpty())
                     saturation = (double)token["saturation"];
-                if (token["brightness"] != null)
+                if (!token["brightness"].IsNullOrEmpty())
                     brightness = (double)token["brightness"];
-                if (token["kelvin"] != null)
+                if (!token["kelvin"].IsNullOrEmpty())
                     kelvin = (int)token["kelvin"];
                 return new LifxColor.HSBK(hue, saturation, brightness, kelvin);
             }

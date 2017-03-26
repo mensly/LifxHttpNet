@@ -10,7 +10,7 @@ namespace LifxHttpSample
 {
     class Program
     {
-        private const string TOKEN = "REDACTED - Generate from https://cloud.lifx.com/settingss";
+        private const string TOKEN = "REDACTED - Generate from https://cloud.lifx.com/settings";
         private const int DELAY = 2000;
         private const int EFFECT_DELAY = 10000;
 
@@ -34,6 +34,7 @@ namespace LifxHttpSample
             await DemoModifyLight(client);
             await DemoModifyCollections(client);
             await DemoEffects(client);
+            await DemoValidateColor(client);
         }
 
         private static async Task DemoListing(LifxClient client)
@@ -241,8 +242,16 @@ namespace LifxHttpSample
                 await light.Cycle(stateList, defaults, Direction.Backward);
                 await Task.Delay(4000);
             }
+        }
 
-            //await location.PulseEffect(new LifxColor.White(1, 3500), 0.025, 10000, fromColor: new LifxColor.White(0.5f, 2000));
+        private static async Task DemoValidateColor(LifxClient client)
+        {
+            string colorName = "Pink";
+            Console.WriteLine();
+            Console.WriteLine(string.Format("Validating color: {0}", colorName));
+            var color = await client.ValidateColor(colorName);
+            if (color.Item1) { Console.WriteLine(string.Format("{0} is a valid color name. Values are {1}.", colorName, color.Item2)); }
+            else Console.WriteLine(string.Format("{0} is not a valid color name.", colorName));
         }
     }
 }

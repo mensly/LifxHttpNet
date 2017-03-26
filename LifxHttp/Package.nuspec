@@ -1,17 +1,17 @@
-<?xml version="1.0"?>
+<?xml version="1.1"?>
 <package >
   <metadata>
     <id>$id$</id>
     <version>$version$</version>
-    <authors>Michael Ensly</authors>
+    <authors>Michael Ensly, Jason Kowaleski</authors>
     <owners>$author$</owners>
     <licenseUrl>https://raw.githubusercontent.com/mensly/LifxHttpNet/master/COPYING</licenseUrl>
     <projectUrl>https://github.com/mensly/LifxHttpNet</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <releaseNotes>Initial release with most simple remote tasks available</releaseNotes>
-    <copyright>Copyright 2015</copyright>
-    <tags>lifx http iot cloud lighting remote</tags>
+    <releaseNotes>Updated release which is up to date with V1.0 of LIFX API.</releaseNotes>
+    <copyright>Copyright 2017</copyright>
+    <tags>lifx http iot cloud lighting remote smart lighting</tags>
     <dependencies>
       <dependency id="Newtonsoft.Json" version="6.0.5" />
       <dependency id="refit" version="2.3.0" />

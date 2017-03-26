@@ -56,6 +56,12 @@ namespace LifxHttp
             return (Task<List<Scene>>) methodImpls["ListScenes"](Client, arguments);
         }
 
+        public virtual Task<LifxColor.HSBK> ValidateColor(string auth,string colorName)
+        {
+            var arguments = new object[] { auth,colorName };
+            return (Task<LifxColor.HSBK>) methodImpls["ValidateColor"](Client, arguments);
+        }
+
         public virtual Task<ApiResults> SetState(string auth,string selector,string args)
         {
             var arguments = new object[] { auth,selector,args };
