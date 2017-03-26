@@ -23,7 +23,7 @@ namespace LifxHttp
         [Headers("Content-Type: application/json")]
         Task<ApiResults> SetStates([Header("Authorization")] string auth, [Body] LifxClient.SetStatesSpec args);
 
-        [Put("/scenes/scene_id::{sceneUUID}/activate")]
+        [Put("/scenes/scene_id:{sceneUUID}/activate")]
         [Headers("Content-Type: application/x-www-form-urlencoded")]
         Task<ApiResults> ActivateScene([Header("Authorization")] string auth, string sceneUUID, [Body] string args);
 
