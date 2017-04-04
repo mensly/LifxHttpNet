@@ -16,15 +16,15 @@ namespace LifxHttp
                 new Dictionary<Light.CollectionSpec, List<Light>>();
             foreach (Light light in lights)
             {
-                if (!groups.ContainsKey(light.group))
+                if (!groups.ContainsKey(light.Group))
                 {
-                    groups[light.group] = new List<Light>();
+                    groups[light.Group] = new List<Light>();
                 }
-                groups[light.group].Add(light);
+                groups[light.Group].Add(light);
             }
             // Grab client from a light
             LifxClient client = (groups.Count > 0) ? groups.First().Value.First().Client : null;
-            return groups.Select(entry => new Group(client, entry.Key.id, entry.Key.name, entry.Value)).ToList();
+            return groups.Select(entry => new Group(client, entry.Key.Id, entry.Key.Name, entry.Value)).ToList();
         }
         public static List<Location> AsLocations(this IEnumerable<Light> lights)
         {
@@ -32,15 +32,15 @@ namespace LifxHttp
                 new Dictionary<Light.CollectionSpec, List<Light>>();
             foreach (Light light in lights)
             {
-                if (!groups.ContainsKey(light.location))
+                if (!groups.ContainsKey(light.Location))
                 {
-                    groups[light.location] = new List<Light>();
+                    groups[light.Location] = new List<Light>();
                 }
-                groups[light.location].Add(light);
+                groups[light.Location].Add(light);
             }
             // Grab client from a light
             LifxClient client = (groups.Count > 0) ? groups.First().Value.First().Client : null;
-            return groups.Select(entry => new Location(client, entry.Key.id, entry.Key.name, entry.Value)).ToList();
+            return groups.Select(entry => new Location(client, entry.Key.Id, entry.Key.Name, entry.Value)).ToList();
         }
 
         public static bool IsSuccessful(this IEnumerable<ApiResult> results, MatchMode matchMode = MatchMode.Any)

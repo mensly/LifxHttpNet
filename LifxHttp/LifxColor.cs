@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using LifxHttp.Helpers;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace LifxHttp
     /// kelvin, and brightness components. However, other means of expressing
     /// colors are available
     /// </summary>
+    [JsonConverter(typeof(LifxColorConverter))]
     public abstract class LifxColor
     {
         /// <summary>
@@ -62,6 +64,10 @@ namespace LifxHttp
         /// Sets hue to 325
         /// </summary>
         public static readonly LifxColor Pink = new Named("pink");
+        /// <summary>
+        /// A pseudo "off" state color with no brightness - used for effects
+        /// </summary>
+        public static readonly LifxColor OffState = new White(0);
         public static readonly IEnumerable<LifxColor> NamedColors = new List<LifxColor>()
         {
             DefaultWhite, Red, Orange, Yellow, Cyan, Green, Blue, Purple, Pink
@@ -99,20 +105,20 @@ namespace LifxHttp
         public class HSBK : LifxColor
         {
             [JsonProperty]
-            private float? hue;
+            private double? hue;
             [JsonProperty]
-            private float? saturation;
+            private double? saturation;
             [JsonProperty]
-            private float? brightness;
+            private double? brightness;
             [JsonProperty]
             private int? kelvin;
 
-            public float Hue { get { return hue ?? float.NaN; } }
-            public float Saturation { get { return saturation ?? float.NaN; } }
-            public float Brightness { get { return brightness ?? float.NaN; } }
+            public double Hue { get { return hue ?? double.NaN; } }
+            public double Saturation { get { return saturation ?? double.NaN; } }
+            public double Brightness { get { return brightness ?? double.NaN; } }
             public int Kelvin { get { return kelvin ?? TemperatureDefault; } }
             internal HSBK() { }
-            public HSBK(float? hue = null, float? saturation = null, float? brightness = null, int? kelvin = null)
+            public HSBK(double? hue = null, double? saturation = null, double? brightness = null, int? kelvin = null)
             {
                 if (hue == null && saturation == null && brightness == null && kelvin == null)
                 {
@@ -147,7 +153,7 @@ namespace LifxHttp
                 return sb.ToString();
             }
 
-            internal HSBK WithBrightness(float brightness)
+            internal HSBK WithBrightness(double brightness)
             {
                 return new HSBK(this.hue, this.saturation, brightness, this.kelvin);
             }
@@ -158,7 +164,7 @@ namespace LifxHttp
         /// </summary>
         public sealed class HSB : HSBK
         {
-            public HSB(float hue, float saturation = 1f, float brightness = 1f) : base(hue, saturation, brightness) { }
+            public HSB(double hue, double saturation = 1f, double brightness = 1f) : base(hue, saturation, brightness) { }
         }
 
         /// <summary>
@@ -166,7 +172,7 @@ namespace LifxHttp
         /// </summary>
         public sealed class White : HSBK
         {
-            public White(float brightness = 1f, int kelvin = TemperatureDefault) : base(null, null, brightness, kelvin) { }
+            public White(double brightness = 1f, int kelvin = TemperatureDefault) : base(null, null, brightness, kelvin) { }
         }
 
         /// <summary>

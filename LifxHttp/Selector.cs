@@ -12,12 +12,14 @@ namespace LifxHttp
     public class Selector
     {
         private const string TYPE_ALL = "all";
-        private const string TYPE_RANDOM = "random";
         private const string TYPE_LIGHT_ID = "id";
+        private const string TYPE_LIGHT_LABEL = "label";
         private const string TYPE_GROUP_ID = "group_id";
         private const string TYPE_GROUP_LABEL = "group";
         private const string TYPE_LOCATION_ID = "location_id";
         private const string TYPE_LOCATION_LABEL = "location";
+        private const string TYPE_SCENE_ID = "scene_id";
+        private const string TYPE_RANDOM = "random"; // Unsure if this is still supported.
 
         /// <summary>
         /// All lights belonging to the authenticated account.
@@ -53,7 +55,7 @@ namespace LifxHttp
         /// </summary>
         public class LightLabel : Selector
         {
-            public LightLabel(string label) : base(label) { IsSingle = true; }
+            public LightLabel(string label) : base(TYPE_LIGHT_LABEL, label) { IsSingle = true; }
         }
 
         /// <summary>
@@ -72,9 +74,8 @@ namespace LifxHttp
             public GroupLabel(string label) : base(TYPE_GROUP_LABEL, label) { }
         }
 
-
         /// <summary>
-        /// OOnly the lights belonging to the location matching the given ID.
+        /// Only the lights belonging to the location matching the given ID.
         /// </summary>
         public class LocationId : Selector
         {
@@ -87,6 +88,14 @@ namespace LifxHttp
         public class LocationLabel : Selector
         {
             public LocationLabel(string label) : base(TYPE_LOCATION_LABEL, label) { }
+        }
+
+        /// <summary>
+        /// The lights that are referenced in the scene ID.
+        /// </summary>
+        public class SceneId : Selector
+        {
+            public SceneId(string id) : base(TYPE_SCENE_ID, id) { }
         }
 
         public static explicit operator Selector(string selector)
@@ -103,10 +112,12 @@ namespace LifxHttp
                         switch (selector.Substring(0, criteria))
                         {
                             case TYPE_LIGHT_ID: return new LightId(remainder);
+                            case TYPE_LIGHT_LABEL: return new LightLabel(remainder);
                             case TYPE_GROUP_ID: return new GroupId(remainder);
                             case TYPE_GROUP_LABEL: return new GroupLabel(remainder);
                             case TYPE_LOCATION_ID: return new LocationId(remainder);
                             case TYPE_LOCATION_LABEL: return new LocationLabel(remainder);
+                            case TYPE_SCENE_ID: return new SceneId(remainder);
                             default: return new LightLabel(selector);
                         }
                     }

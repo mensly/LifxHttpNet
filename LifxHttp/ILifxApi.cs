@@ -10,30 +10,40 @@ namespace LifxHttp
     internal interface ILifxApi
     {
         [Get("/lights/{selector}")]
-        Task<Light> GetLight([Header("Authorization")] string auth, string selector);
-
-        [Get("/lights/{selector}")]
         Task<List<Light>> ListLights([Header("Authorization")] string auth, string selector);
 
-        [Post("/lights/{selector}/toggle")]
-        Task<List<ApiResult>> TogglePower([Header("Authorization")] string auth, string selector);
+        [Get("/scenes")]
+        Task<List<Scene>> ListScenes([Header("Authorization")] string auth);
+
+        [Get("/color?string={colorName}")]
+        Task<LifxColor.HSBK> ValidateColor([Header("Authorization")] string auth, string colorName);
+
+        [Put("/lights/{selector}/state")]
+        [Headers("Content-Type: application/x-www-form-urlencoded")]
+        Task<ApiResults> SetState([Header("Authorization")] string auth, string selector, [Body] string args);
+
+        [Put("/lights/states")]
+        [Headers("Content-Type: application/json")]
+        Task<ApiResults> SetStates([Header("Authorization")] string auth, [Body] LifxClient.SetStatesSpec args);
+
+        [Put("/scenes/scene_id:{sceneUUID}/activate")]
+        [Headers("Content-Type: application/x-www-form-urlencoded")]
+        Task<ApiResults> ActivateScene([Header("Authorization")] string auth, string sceneUUID, [Body] string args);
 
         [Post("/lights/{selector}/toggle")]
-        Task<ApiResult> TogglePowerSingle([Header("Authorization")] string auth, string selector);
+        [Headers("Content-Type: application/x-www-form-urlencoded")]
+        Task<ApiResults> TogglePower([Header("Authorization")] string auth, string selector, [Body] string args);
 
-        [Put("/lights/{selector}/power")]
+        [Post("/lights/{selector}/effects/pulse")]
         [Headers("Content-Type: application/x-www-form-urlencoded")]
-        Task<List<ApiResult>> SetPower([Header("Authorization")] string auth, string selector, [Body] string args);
+        Task<ApiResults> PulseEffect([Header("Authorization")] string auth, string selector, [Body] string args);
 
-        [Put("/lights/{selector}/power")]
+        [Post("/lights/{selector}/effects/breathe")]
         [Headers("Content-Type: application/x-www-form-urlencoded")]
-        Task<ApiResult> SetPowerSingle([Header("Authorization")] string auth, string selector, [Body] string args);
+        Task<ApiResults> BreatheEffect([Header("Authorization")] string auth, string selector, [Body] string args);
 
-        [Put("/lights/{selector}/color")]
-        [Headers("Content-Type: application/x-www-form-urlencoded")]
-        Task<List<ApiResult>> SetColor([Header("Authorization")] string auth, string selector, [Body] string args);
-        [Put("/lights/{selector}/color")]
-        [Headers("Content-Type: application/x-www-form-urlencoded")]
-        Task<ApiResult> SetColorSingle([Header("Authorization")] string auth, string selector, [Body] string args);
+        [Post("/lights/{selector}/cycle")]
+        [Headers("Content-Type: application/json")]
+        Task<ApiResults> Cycle([Header("Authorization")] string auth, string selector, [Body] LifxClient.SetStateSpec args);
     }
 }
