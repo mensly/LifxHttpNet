@@ -44,52 +44,64 @@ namespace LifxHttp
             Client = client;
         }
 
-        public virtual Task<Light> GetLight(string auth,string selector)
-        {
-            var arguments = new object[] { auth,selector };
-            return (Task<Light>) methodImpls["GetLight"](Client, arguments);
-        }
-
         public virtual Task<List<Light>> ListLights(string auth,string selector)
         {
             var arguments = new object[] { auth,selector };
             return (Task<List<Light>>) methodImpls["ListLights"](Client, arguments);
         }
 
-        public virtual Task<List<ApiResult>> TogglePower(string auth,string selector)
+        public virtual Task<List<Scene>> ListScenes(string auth)
         {
-            var arguments = new object[] { auth,selector };
-            return (Task<List<ApiResult>>) methodImpls["TogglePower"](Client, arguments);
+            var arguments = new object[] { auth };
+            return (Task<List<Scene>>) methodImpls["ListScenes"](Client, arguments);
         }
 
-        public virtual Task<ApiResult> TogglePowerSingle(string auth,string selector)
+        public virtual Task<LifxColor.HSBK> ValidateColor(string auth,string colorName)
         {
-            var arguments = new object[] { auth,selector };
-            return (Task<ApiResult>) methodImpls["TogglePowerSingle"](Client, arguments);
+            var arguments = new object[] { auth,colorName };
+            return (Task<LifxColor.HSBK>) methodImpls["ValidateColor"](Client, arguments);
         }
 
-        public virtual Task<List<ApiResult>> SetPower(string auth,string selector,string args)
+        public virtual Task<ApiResults> SetState(string auth,string selector,string args)
         {
             var arguments = new object[] { auth,selector,args };
-            return (Task<List<ApiResult>>) methodImpls["SetPower"](Client, arguments);
+            return (Task<ApiResults>) methodImpls["SetState"](Client, arguments);
         }
 
-        public virtual Task<ApiResult> SetPowerSingle(string auth,string selector,string args)
+        public virtual Task<ApiResults> SetStates(string auth,LifxClient.SetStatesSpec args)
         {
-            var arguments = new object[] { auth,selector,args };
-            return (Task<ApiResult>) methodImpls["SetPowerSingle"](Client, arguments);
+            var arguments = new object[] { auth,args };
+            return (Task<ApiResults>) methodImpls["SetStates"](Client, arguments);
         }
 
-        public virtual Task<List<ApiResult>> SetColor(string auth,string selector,string args)
+        public virtual Task<ApiResults> ActivateScene(string auth,string sceneUUID,string args)
         {
-            var arguments = new object[] { auth,selector,args };
-            return (Task<List<ApiResult>>) methodImpls["SetColor"](Client, arguments);
+            var arguments = new object[] { auth,sceneUUID,args };
+            return (Task<ApiResults>) methodImpls["ActivateScene"](Client, arguments);
         }
 
-        public virtual Task<ApiResult> SetColorSingle(string auth,string selector,string args)
+        public virtual Task<ApiResults> TogglePower(string auth,string selector,string args)
         {
             var arguments = new object[] { auth,selector,args };
-            return (Task<ApiResult>) methodImpls["SetColorSingle"](Client, arguments);
+            return (Task<ApiResults>) methodImpls["TogglePower"](Client, arguments);
+        }
+
+        public virtual Task<ApiResults> PulseEffect(string auth,string selector,string args)
+        {
+            var arguments = new object[] { auth,selector,args };
+            return (Task<ApiResults>) methodImpls["PulseEffect"](Client, arguments);
+        }
+
+        public virtual Task<ApiResults> BreatheEffect(string auth,string selector,string args)
+        {
+            var arguments = new object[] { auth,selector,args };
+            return (Task<ApiResults>) methodImpls["BreatheEffect"](Client, arguments);
+        }
+
+        public virtual Task<ApiResults> Cycle(string auth,string selector,LifxClient.SetStateSpec args)
+        {
+            var arguments = new object[] { auth,selector,args };
+            return (Task<ApiResults>) methodImpls["Cycle"](Client, arguments);
         }
 
     }

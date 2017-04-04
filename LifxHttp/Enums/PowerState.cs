@@ -7,7 +7,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace LifxHttp
+namespace LifxHttp.Enums
 {
     [JsonConverter(typeof(StringEnumConverter))]
     public enum PowerState
