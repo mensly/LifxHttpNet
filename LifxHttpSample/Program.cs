@@ -102,7 +102,7 @@ namespace LifxHttpSample
             }
             Console.WriteLine("Using light: {0}", light);
             Console.WriteLine("Turning light off");
-            //await light.SetPower(false);
+            await light.SetPower(false);
             await Task.Delay(DELAY);
             Console.WriteLine("Toggling light on");
             await light.TogglePower();
@@ -218,7 +218,6 @@ namespace LifxHttpSample
             await light.BreatheEffect(LifxColor.Cyan, 5, 4, LifxColor.Orange, peak: 0.5d);
             await Task.Delay(EFFECT_DELAY);
 
-            Console.WriteLine("Cycling through some various states.");
             List<LightState> stateList = new List<LightState>();
             stateList.Add(new LightState(PowerState.On, LifxColor.Pink, 0.5d));
             stateList.Add(new LightState(PowerState.On, LifxColor.Pink, 1.0d));
@@ -231,12 +230,17 @@ namespace LifxHttpSample
             defaults.Brightness = 1.0d;
 
             // Cycle forward
+            Console.WriteLine("Cycling forward through set of 6 light states.");
             for (int i = 0; i < stateList.Count(); i++)
             {
                 await light.Cycle(stateList, defaults);
                 await Task.Delay(4000);
             }
+
+            await Task.Delay(1000);
+
             // Cycle backward
+            Console.WriteLine("Cycling backward through set of 6 light states.");
             for (int i = 0; i < stateList.Count(); i++)
             {
                 await light.Cycle(stateList, defaults, Direction.Backward);
